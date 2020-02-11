@@ -6,16 +6,19 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
-
+import com.google.firebase.analytics.FirebaseAnalytics;
 import java.text.DecimalFormat;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
+    private FirebaseAnalytics mFirebaseAnalytics;
     EditText distMi, distKilo, temperatureC, temperatureF, amtGal, amtLiter, pounds, kilograms;
     DecimalFormat dc = new DecimalFormat("#.####");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         temperatureC = findViewById(R.id.tempC);
         temperatureF = findViewById(R.id.tempF);
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
                           distMi.getText().clear();
                           String milesStr = kiloToMiles(s.toString());
                           distMi.setText(milesStr);
+                          Log.v("Kilometers to Miles", "" + milesStr);
+
                       }
 
             }
@@ -60,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                         distKilo.getText().clear();
                         String kiloStr = milesToKilo(s.toString());
                         distKilo.setText(kiloStr);
+                        Log.v("Miles to Kilometers", "" + kiloStr);
                     }
             }
 
@@ -81,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     amtGal.getText().clear();
                     String galStr = literToGallon(s.toString());
                     amtGal.setText(galStr);
+                    Log.v("Liters to Gallons", "" + galStr);
                 }
             }
 
@@ -102,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                     amtLiter.getText().clear();
                     String literStr = galToLiter(s.toString());
                     amtLiter.setText(literStr);
+                    Log.v("Gallons to Liters", "" + literStr);
                 }
             }
 
@@ -123,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     temperatureC.getText().clear();
                     String tempCStr = tempFToC(s.toString());
                     temperatureC.setText(tempCStr);
+                    Log.v("Fahrenheit to Celsius", "" + tempCStr);
                 }
             }
 
@@ -142,8 +151,9 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (temperatureC.hasFocus() && temperatureC.length() != 0 && !(s.toString().equals("-"))){
                     temperatureF.getText().clear();
-                    String tempF = tempCtoF(s.toString());
-                    temperatureF.setText(tempF);
+                    String tempFStr = tempCtoF(s.toString());
+                    temperatureF.setText(tempFStr);
+                    Log.v("Celsius to Fahrenheit", "" + tempFStr);
                 }
             }
 
@@ -163,8 +173,9 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (pounds.hasFocus() && pounds.length() != 0 && !(s.toString().equals("-"))){
                     kilograms.getText().clear();
-                    String kiloGrams = weightLbsToKg(s.toString());
-                    kilograms.setText(kiloGrams);
+                    String kiloGramsStr = weightLbsToKg(s.toString());
+                    kilograms.setText(kiloGramsStr);
+                    Log.v("Pounds to Kilograms", "" + kiloGramsStr);
                 }
             }
 
@@ -184,8 +195,9 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (kilograms.hasFocus() && kilograms.length() != 0 && !(s.toString().equals("-"))){
                     pounds.getText().clear();
-                    String pound = weightKgToLbs(s.toString());
-                    pounds.setText(pound);
+                    String poundStr = weightKgToLbs(s.toString());
+                    pounds.setText(poundStr);
+                    Log.v("Kilograms to Pounds", "" + poundStr);
                 }
             }
 
